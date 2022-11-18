@@ -3,6 +3,7 @@
 ## 주최
 - 주최 : 한국수자원공사(K-water)
 - 주관 : AIFactory
+- 기간 : 11월 21일 (월) 10:00 ~ 12월 09일 (금) 21: 55
 - https://aifactory.space/competition/detail/2143
 
 ## About
