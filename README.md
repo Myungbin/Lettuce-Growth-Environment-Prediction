@@ -15,3 +15,9 @@
 [Task 2] 배수지 #2 | 농업지역  
 [Task 3] 배수지 #3 | 산업단지  
   
+## 참조
+Temporal Fusion Transformer를 통한 수요예측  
+https://pytorch-forecasting.readthedocs.io/en/stable/tutorials/stallion.html
+https://slowsteadystat.tistory.com/24  
+model  
+[Temporal Fusion Transformer](https://www.google.com/search?q=Temporal+Fusion+Transformer&biw=1920&bih=929&ei=siJ7Y7nkD4up-Qa835SYAg&ved=0ahUKEwi5hbKx2r77AhWLVN4KHbwvBSMQ4dUDCA8&uact=5&oq=Temporal+Fusion+Transformer&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6CggAEEcQ1gQQsANKBAhBGABKBAhGGABQywRY0AZgkAloAXABeACAAXqIAcgCkgEDMC4zmAEAoAEByAEKwAEB&sclient=gws-wiz-serp)
