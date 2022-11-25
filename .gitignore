@@ -130,3 +130,5 @@ dmypy.json
 
 # Environments
 water_project/
+catboost_info/
+*.html
