@@ -4,6 +4,11 @@ from glob import glob
 
 
 def make_data(x_train_path, y_train_path, x_test_path, y_test_path):
+    '''
+    base_dataset (concat된 Train, Test data)을 일 평균하여 값 반환
+    
+    pivot_table을 이용하여 6시간 단위 평균값을 반환
+    '''
     train_input_list = sorted(glob(x_train_path))
     train_target_list = sorted(glob(y_train_path))
 

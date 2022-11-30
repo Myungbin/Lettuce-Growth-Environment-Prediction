@@ -48,7 +48,7 @@ def limit_range(df):
 
 def col_cumsum(df, col, cum_col):
     '''
-    시간값에 이상치가 있어서 누적값을 새로 생성
+    시간값에 이상치가 있어서 누적값을 새로 생성(train)
     '''
     import itertools
     df[cum_col] = 0
@@ -62,7 +62,7 @@ def col_cumsum(df, col, cum_col):
 
 def col_cumsum_test(df, col, cum_col):
     '''
-    시간값에 이상치가 있어서 누적값을 새로 생성
+    시간값에 이상치가 있어서 누적값을 새로 생성(test)
     '''
     import itertools
     df[cum_col] = 0
@@ -76,7 +76,7 @@ def col_cumsum_test(df, col, cum_col):
 
 def time_split(df):
     '''
-    6시간 단위로 시간분할
+    6시간 단위로 시간분할(pivot_data function 사전작업)
     '''
     df.loc[(df['obs_time'] < 6), '6time'] = 1
     df.loc[(df['obs_time'] >=6) & (df['obs_time'] < 12), '6time'] = 2

@@ -6,7 +6,7 @@ import glob
 
 def model_train(train, test, model):
     '''
-    train shape = (784, 18), test shape = (140, 18)
+    train shape = (784, ?), test shape = (140, ?)
     model => sklearn api model
     '''
 
