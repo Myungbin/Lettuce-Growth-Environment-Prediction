@@ -90,7 +90,7 @@ def pivot_data(df):
     '''
     6시간 단위의 pivot table 생성
     '''
-    df = df.drop(['predicted_weight_g'], axis=1)
+    df = df.drop(['predicted_weight_g', 'obs_time'], axis=1)
     df = pd.pivot_table(df, index=['DAT', 'Case'], columns=['6time'], aggfunc='mean')
     df.columns = [''.join(str(col)) for col in df.columns]
     df = df.reset_index()
