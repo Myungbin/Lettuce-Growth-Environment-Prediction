@@ -1,0 +1,5 @@
+스케일링 안하고 autogluon - 6.4(public)
+
+스케일링 하고 autogluon - 8.3(public)
+
+스케일링 하고 catboost - 7.8(public)
