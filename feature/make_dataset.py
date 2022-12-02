@@ -55,6 +55,7 @@ def make_data(x_train_path, y_train_path, x_test_path, y_test_path):
 
     train_cumsum = train[['DAT', 'obs_time', '일간누적분무량',
                         '일간누적백색광량', '일간누적적색광량', '일간누적청색광량', '일간누적총광량', 'Case']]
+    
     test_cumsum = test[['DAT', 'obs_time', '일간누적분무량',
                         '일간누적백색광량', '일간누적적색광량', '일간누적청색광량', '일간누적총광량', 'Case']]
 

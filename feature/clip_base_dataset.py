@@ -12,8 +12,8 @@ def make_dataset(all_input_list, all_target_list):
     for idx in range(length):
         X = pd.read_csv(all_input_list[idx])
         y = pd.read_csv(all_target_list[idx])
-        q5 = X.quantile(0.05)
-        q95 = X.quantile(0.95)
+        q5 = X.quantile(0.01)
+        q95 = X.quantile(0.99)
         X1 = X.clip(q5, q95, axis=1)
         y['DAT'] = y['DAT']-1
         df_concat = pd.merge(X1, y, on='DAT', how='left')
@@ -96,8 +96,9 @@ def pivot_data(df):
     '''
     6시간 단위의 pivot table 생성
     '''
-    df = df.drop(['predicted_weight_g', 'obs_time'], axis=1)
-    df = pd.pivot_table(df, index=['DAT', 'Case'], columns=['6time'], aggfunc='mean')
+    df = df.drop(['predicted_weight_g', 'obs_time', '일간누적분무량', '일간누적백색광량',
+                    '일간누적적색광량', '일간누적청색광량', '일간누적총광량'], axis=1)
+    df = pd.pivot_table(df, index=['DAT', 'Case'], columns=['6time'], aggfunc='sum')
     df.columns = [''.join(str(col)) for col in df.columns]
     df = df.reset_index()
     df = df.drop(['DAT', 'Case'], axis=1)
