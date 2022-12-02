@@ -96,8 +96,8 @@ def pivot_data(df):
     '''
     6시간 단위의 pivot table 생성
     '''
-    df = df.drop(['predicted_weight_g', 'obs_time', '일간누적분무량', '일간누적백색광량',
-                    '일간누적적색광량', '일간누적청색광량', '일간누적총광량'], axis=1)
+    df = df.drop(['predicted_weight_g', 'obs_time', '내부온도관측치', '내부습도관측치', 'co2관측치', 'ec관측치',
+                  '시간당분무량', '시간당백색광량', '시간당적색광량', '시간당청색광량', '시간당총광량',], axis=1)
     df = pd.pivot_table(df, index=['DAT', 'Case'], columns=['6time'], aggfunc='sum')
     df.columns = [''.join(str(col)) for col in df.columns]
     df = df.reset_index()

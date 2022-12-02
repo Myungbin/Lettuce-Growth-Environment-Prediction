@@ -74,5 +74,5 @@ def make_data(x_train_path, y_train_path, x_test_path, y_test_path):
     test['dark'] = test_dark
     train['water'] = train_water
     test['water'] = test_water
-    
+        
     return train, test, pivot_train, pivot_test
