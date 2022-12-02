@@ -12,7 +12,9 @@ def model_train(train, test, model):
 
     X = train.drop(['predicted_weight_g', 'Case', 'obs_time', '6time'], axis=1)
     y = train['predicted_weight_g']
-
+    
+    print(X.columns)
+    
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, random_state=113, shuffle=True)
     
     x_test = test.drop(['predicted_weight_g', 'Case', 'obs_time', '6time'], axis=1)

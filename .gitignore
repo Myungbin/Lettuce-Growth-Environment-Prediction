@@ -132,4 +132,3 @@ dmypy.json
 water_project/
 catboost_info/*.*
 *.html
-*.zip
