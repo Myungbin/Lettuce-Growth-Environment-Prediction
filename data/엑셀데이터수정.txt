@@ -1,1 +1,0 @@
-train target에 CASE4번 DAT0의 14, 15시 내부온도 내부 습도 수정
