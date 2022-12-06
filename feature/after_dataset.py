@@ -3,9 +3,14 @@ import numpy as np
 import datetime
 
 def cumsum_group_max(df):
-    '''
-    누적값은 media이 아닌 일별 최대값이 들어가야함
-    '''
+    """누적값을 평균이 아닌 일별 최대값을 반환
+
+    Args:
+        df (DataFrame): train, test data
+
+    Returns:
+        DataFrame: 일별 최대 누적값
+    """    
     df_a = pd.DataFrame()
 
     for i, v in enumerate(df["Case"].unique()):
@@ -15,10 +20,15 @@ def cumsum_group_max(df):
     return df_a
 
 
-def group_median(df):  
-    '''
-    변수의 Case별로 DAT을 기준으로 groupby 하여 대표값 설정
-    '''
+def group_median(df):
+    """변수의 Case별로 DAT을 기준으로 groupby 하여 대표값 설정
+
+    Args:
+        df (DataFrame): train, test data
+
+    Returns:
+        DataFrame: 시간단위값을 일별 대표값으로 변환
+    """      
     df_a = pd.DataFrame()
 
     for i, v in enumerate(df["Case"].unique()):
@@ -29,9 +39,15 @@ def group_median(df):
 
 
 def concat_df(df, cumsum_df):
-    '''
-    누적값을 원래 데이터와 concat
-    '''
+    """누적값을 원래 데이터와 concat
+
+    Args:
+        df (DataFrame): group_median data
+        cumsum_df (DataFrame): cumsum_group_max data
+
+    Returns:
+        DataFrame: concat data
+    """    
     cumsum_list = ['일간누적분무량', '일간누적백색광량', '일간누적적색광량', '일간누적청색광량', '일간누적총광량']
     for col in cumsum_list:
         df[col] = cumsum_df[col]
@@ -40,9 +56,15 @@ def concat_df(df, cumsum_df):
 
 
 def diff_temp(train, test):
-    '''
-    일교차
-    '''
+    """일교차
+
+    Args:
+        train (DataFrame): train data
+        test (DataFrame): test data
+
+    Returns:
+        DataFrame: 일교차 데이터 생성
+    """    
     train_diff_temp = []
     for i in range(784):
         temp_train = train[i*24:(i+1)*24]
@@ -59,9 +81,16 @@ def diff_temp(train, test):
 
 
 def none_light(train, test):
-    '''
-    광합성을 못하는 시간
-    '''
+    """광합성을 못하는 시간
+
+    Args:
+        train (DataFrame): train data
+        test (DataFrame): test data
+
+    Returns:
+        DataFrame: 광합성을 못하는 시간 count
+    """    
+
     train_night = []
     for i in range(784):
         nigth_train = train[i*24:(i+1)*24]
@@ -76,9 +105,16 @@ def none_light(train, test):
 
 
 def water(train, test):
-    '''
-    하루에 물을 주는 횟수
-    '''
+    """하루에 물을 주는 횟수
+
+    Args:
+        train (DataFrame): train data
+        test (DataFrame): test data
+
+    Returns:
+        DataFrame
+    """   
+
     train_water = []
     for i in range(784):
         water_train = train[i*24:(i+1)*24]
@@ -93,9 +129,14 @@ def water(train, test):
 
 
 def accumulate(train, test, col):
-    '''
-    총 누적합
-    '''
+    """월간 누적합
+
+    Args:
+        train (DataFrame): train data
+        test (DataFrame): test data
+        col (str): 시간단위 feature
+    """    
+
     train['월간'+col] = 0
     for i in range(28):
         result = (train['일간'+col][i*28:(i+1)*28].cumsum())
