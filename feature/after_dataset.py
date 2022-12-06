@@ -4,7 +4,7 @@ import datetime
 
 def cumsum_group_max(df):
     '''
-    *누적값은 media이 아닌 일별 최대값이 들어가야함
+    누적값은 media이 아닌 일별 최대값이 들어가야함
     '''
     df_a = pd.DataFrame()
 
