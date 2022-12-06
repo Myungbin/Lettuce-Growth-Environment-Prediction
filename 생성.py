@@ -11,16 +11,15 @@ from torch.optim import lr_scheduler
 class Discriminator(nn.Module):
   def __init__(self):
     super(Discriminator, self).__init__()
-    self.input = 2
-    self.hidden = 672
+    self.input = 672
     self.output= 1
     self.model = nn.Sequential(
-        nn.Linear(self.input, self.hidden), # input size, hidden size
+        nn.Linear(self.input, 128), # input size, hidden size
         nn.ReLU(),
         nn.Dropout(0.3),
-        nn.Linear(self.hidden, int(self.hidden/2)),
+        nn.Linear(128, 64),
         nn.ReLU(),
-        nn.Linear(int(self.hidden/2),self.output), # hidden size, output size
+        nn.Linear(64,self.output), # hidden size, output size
         nn.Sigmoid()
     ).to(device)
 
@@ -32,21 +31,20 @@ class Discriminator(nn.Module):
 class Generator(nn.Module):
   def __init__(self):
     super(Generator, self).__init__()
-    self.input = 2
-    self.output = 2
-    self.hidden = 128
+    self.features = 2 # 피쳐수
+    self.output = 672 # 데이터수
     self.model = nn.Sequential(
-        nn.Linear(self.input, self.hidden), # input size, hidden size
+        nn.Linear(self.features, 64), # input size, hidden size
         nn.LeakyReLU(0.2),
         nn.Dropout(0.3),
-        nn.Linear(self.hidden, int(self.hidden/2)),
+        nn.Linear(64, 128),
         nn.LeakyReLU(0.2),
-        nn.Linear(int(self.hidden/2),self.output), # hidden size, output size
+        nn.Linear(128,self.output), # hidden size, output size
         nn.Tanh()
     ).to(device)
 
   def forward(self, x):
-    #print('generator',x.size())
+    print('generator',x.size())
     x = self.model(x)
     return x
 
@@ -82,7 +80,8 @@ for epoch in range(n_epochs):
   z2 = torch.normal(mean=11.500000, std=6.927343, size=(nptonn.shape[0], noise)).cuda() # random noise
   z = torch.cat([z1,z2], dim=1) #[M, N+N, K]
 
-  #print('noise',z.size())
+  print('noise',z.size())
+  print(z[0])
   generated_dis = generator(z) # create distribution
   generated_dis_value = generated_dis.detach().cpu()
 
