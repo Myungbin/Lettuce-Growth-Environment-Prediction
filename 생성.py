@@ -11,15 +11,15 @@ from torch.optim import lr_scheduler
 class Discriminator(nn.Module):
   def __init__(self):
     super(Discriminator, self).__init__()
-    self.input = 672
+    self.input = 2
     self.output= 1
     self.model = nn.Sequential(
         nn.Linear(self.input, 128), # input size, hidden size
-        nn.ReLU(),
+        nn.LeakyReLU(0.2),
         nn.Dropout(0.3),
         nn.Linear(128, 64),
-        nn.ReLU(),
-        nn.Linear(64,self.output), # hidden size, output size
+        nn.LeakyReLU(0.2),
+        nn.Linear(64, self.output), # hidden size, output size
         nn.Sigmoid()
     ).to(device)
 
@@ -32,7 +32,7 @@ class Generator(nn.Module):
   def __init__(self):
     super(Generator, self).__init__()
     self.features = 2 # 피쳐수
-    self.output = 672 # 데이터수
+    self.output = 2 # 데이터수
     self.model = nn.Sequential(
         nn.Linear(self.features, 64), # input size, hidden size
         nn.LeakyReLU(0.2),
@@ -44,7 +44,7 @@ class Generator(nn.Module):
     ).to(device)
 
   def forward(self, x):
-    print('generator',x.size())
+    #print('generator',x.size())
     x = self.model(x)
     return x
 
@@ -74,17 +74,17 @@ for epoch in range(n_epochs):
   fake = torch.cuda.FloatTensor(nptonn.size(0), 1).fill_(0.0) # 가짜
 
   real_data = nptonn.cuda()
-  
+  #print(real_data.size())
   g_optim.zero_grad()
   z1 = torch.normal(mean=13.5, std=8.083764, size=(nptonn.shape[0], noise)).cuda() # random noise
   z2 = torch.normal(mean=11.500000, std=6.927343, size=(nptonn.shape[0], noise)).cuda() # random noise
   z = torch.cat([z1,z2], dim=1) #[M, N+N, K]
 
-  print('noise',z.size())
-  print(z[0])
+  #print('noise',z.size())
+  #print(z[0])
   generated_dis = generator(z) # create distribution
   generated_dis_value = generated_dis.detach().cpu()
-
+  #print(generated_dis.detach().size())
   # criterion.cuda()
   g_loss =  criterion(discriminator(generated_dis), real) # calculate generator loss
   
@@ -98,7 +98,7 @@ for epoch in range(n_epochs):
   d_loss = (real_loss + fake_loss) / 2
 
   if  g_loss < 0.2 :
-    newdata.append(generated_dis)
+    newdata.append(generated_dis_value)
 
   d_loss.backward()
   d_optim.step()
