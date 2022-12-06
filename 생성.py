@@ -11,7 +11,7 @@ from torch.optim import lr_scheduler
 class Discriminator(nn.Module):
   def __init__(self):
     super(Discriminator, self).__init__()
-    self.input = 23
+    self.input = 2
     self.hidden = 672
     self.output= 1
     self.model = nn.Sequential(
@@ -32,8 +32,8 @@ class Discriminator(nn.Module):
 class Generator(nn.Module):
   def __init__(self):
     super(Generator, self).__init__()
-    self.input = 672
-    self.output = 23
+    self.input = 2
+    self.output = 2
     self.hidden = 128
     self.model = nn.Sequential(
         nn.Linear(self.input, self.hidden), # input size, hidden size
@@ -65,11 +65,11 @@ scheduler = lr_scheduler.ReduceLROnPlateau(optimizer=g_optim, mode='min', verbos
 import time
 n_epochs = 1000
 sample_interval = 100 # 몇 번의 배치마다 결과를 출력할 것인가
-noise = 672
+noise = 1
 start_time = time.time()
 newdata = []
 for epoch in range(n_epochs):
-  dftonp = test.values
+  dftonp = test.iloc[:,:2].values
   nptonn = torch.from_numpy(dftonp).float()
 
   real = torch.cuda.FloatTensor(nptonn.size(0), 1).fill_(1.0) # 진짜
@@ -78,7 +78,10 @@ for epoch in range(n_epochs):
   real_data = nptonn.cuda()
   
   g_optim.zero_grad()
-  z = torch.normal(mean=0, std=1, size=(nptonn.shape[0], noise)).cuda() # random noise
+  z1 = torch.normal(mean=13.5, std=8.083764, size=(nptonn.shape[0], noise)).cuda() # random noise
+  z2 = torch.normal(mean=11.500000, std=6.927343, size=(nptonn.shape[0], noise)).cuda() # random noise
+  z = torch.cat([z1,z2], dim=1) #[M, N+N, K]
+
   #print('noise',z.size())
   generated_dis = generator(z) # create distribution
   generated_dis_value = generated_dis.detach().cpu()
@@ -95,7 +98,7 @@ for epoch in range(n_epochs):
   fake_loss = criterion(discriminator(generated_dis.detach()), fake)
   d_loss = (real_loss + fake_loss) / 2
 
-  if  g_loss < 0.1 :
+  if  g_loss < 0.2 :
     newdata.append(generated_dis)
 
   d_loss.backward()
