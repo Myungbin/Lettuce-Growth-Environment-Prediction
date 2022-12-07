@@ -14,13 +14,12 @@ def make_data(x_train_path, y_train_path, x_test_path, y_test_path):
 
     Returns:
         DataFrame: preprocessing data
-    """    
+    """
     train_input_list = sorted(glob(x_train_path))
     train_target_list = sorted(glob(y_train_path))
 
     test_input_list = sorted(glob(x_test_path))
     test_target_list = sorted(glob(y_test_path))
-
 
     train = make_dataset(train_input_list, train_target_list)
     test = make_dataset(test_input_list, test_target_list)
@@ -42,7 +41,6 @@ def make_data(x_train_path, y_train_path, x_test_path, y_test_path):
     train = col_cumsum(train, "시간당청색광량", "일간누적청색광량")
     train = col_cumsum(train, "시간당총광량", "일간누적총광량")
 
-
     test = col_cumsum_test(test, "시간당분무량", "일간누적분무량")
     test = col_cumsum_test(test, "시간당백색광량", "일간누적백색광량")
     test = col_cumsum_test(test, "시간당적색광량", "일간누적적색광량")
@@ -60,8 +58,8 @@ def make_data(x_train_path, y_train_path, x_test_path, y_test_path):
     pivot_test = pivot_data(test)
 
     train_cumsum = train[['DAT', 'obs_time', '일간누적분무량',
-                        '일간누적백색광량', '일간누적적색광량', '일간누적청색광량', '일간누적총광량', 'Case']]
-    
+                          '일간누적백색광량', '일간누적적색광량', '일간누적청색광량', '일간누적총광량', 'Case']]
+
     test_cumsum = test[['DAT', 'obs_time', '일간누적분무량',
                         '일간누적백색광량', '일간누적적색광량', '일간누적청색광량', '일간누적총광량', 'Case']]
 
@@ -80,5 +78,5 @@ def make_data(x_train_path, y_train_path, x_test_path, y_test_path):
     test['dark'] = test_dark
     train['water'] = train_water
     test['water'] = test_water
-        
+
     return train, test, pivot_train, pivot_test
