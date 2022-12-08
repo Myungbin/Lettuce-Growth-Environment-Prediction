@@ -121,10 +121,10 @@ def time_split(df):
     Returns:
         DataFrame: df['6time']
     """
-    df.loc[(df['obs_time'] < 6), '6time'] = 1
-    df.loc[(df['obs_time'] >= 6) & (df['obs_time'] < 12), '6time'] = 2
-    df.loc[(df['obs_time'] >= 12) & (df['obs_time'] < 19), '6time'] = 2
-    df.loc[(df['obs_time'] >= 19) & (df['obs_time'] <= 24), '6time'] = 3
+    df.loc[(df['obs_time'] < 7), '6time'] = '새벽'
+    df.loc[(df['obs_time'] >= 7) & (df['obs_time'] < 12), '6time'] = '아침'
+    df.loc[(df['obs_time'] >= 12) & (df['obs_time'] < 19), '6time'] = '오후'
+    df.loc[(df['obs_time'] >= 19) & (df['obs_time'] <= 24), '6time'] = '저녁'
 
     return df
 
@@ -139,7 +139,7 @@ def pivot_data(df):
         DataFrame: pivot table data
     """
     df = df.drop(['predicted_weight_g', 'obs_time', '시간당분무량', '시간당백색광량',
-                  '시간당적색광량', '시간당청색광량', '시간당총광량'], axis=1)
+                  '시간당적색광량', '시간당청색광량', '시간당총광량', '일간누적총광량'], axis=1)
     df = pd.pivot_table(df, index=['DAT', 'Case'], columns=[
                         '6time'], aggfunc='sum')
     df.columns = [''.join(str(col)) for col in df.columns]

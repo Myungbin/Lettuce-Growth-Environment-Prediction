@@ -26,8 +26,7 @@ def moving_average(input_path):
         ma['time'] = [i % 24 for i in range(len(ma))]
         ma['DAT'] = [i//24 for i in range(len(ma))]
 
-        df = pd.pivot_table(ma, index=['DAT'], columns=[
-                            'time'], aggfunc='mean')
+        df = pd.pivot_table(ma, index=['DAT'], columns=['time'], aggfunc='mean')
         df.columns = [''.join(str(col)) for col in df.columns]
         df = df.reset_index()
 

@@ -12,8 +12,8 @@ def make_dataset(all_input_list, all_target_list):
     for idx in range(length):
         X = pd.read_csv(all_input_list[idx])
         y = pd.read_csv(all_target_list[idx])
-        q5 = X.quantile(0.01)
-        q95 = X.quantile(0.99)
+        q5 = X.quantile(0.05)
+        q95 = X.quantile(0.95)
         X1 = X.clip(q5, q95, axis=1)
         y['DAT'] = y['DAT']-1
         df_concat = pd.merge(X1, y, on='DAT', how='left')

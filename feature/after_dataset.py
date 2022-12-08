@@ -34,7 +34,7 @@ def group_median(df):
 
     for i, v in enumerate(df["Case"].unique()):
         train_old = df[df['Case'] == v]
-        train_old = train_old.groupby(['DAT']).mean().reset_index()
+        train_old = train_old.groupby(['DAT']).median().reset_index()
         df_a = pd.concat([df_a, train_old])
     return df_a
 
