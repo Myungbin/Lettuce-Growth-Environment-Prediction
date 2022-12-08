@@ -1,0 +1,9 @@
+  z0 = torch.normal(mean=11.5, std=6.9, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z1 = torch.normal(mean=25.78, std=4.3, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z2 = torch.normal(mean=54.91, std=12.2, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z3 = torch.normal(mean=533.833, std=144.1, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z4 = torch.normal(mean=1.273, std=0.932, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z5 = torch.normal(mean=430.600, std=491.308, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z6 = torch.normal(mean=6765.408, std=9450.28, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z7 = torch.normal(mean=1309.564, std=2653.722, size=(nptonn.shape[0], 1)).cuda() # random noise
+  z8 = torch.normal(mean=856.852, std=1938.17, size=(nptonn.shape[0], 1)).cuda() # random noise
