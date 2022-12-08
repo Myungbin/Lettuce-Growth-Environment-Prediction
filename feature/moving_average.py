@@ -1,5 +1,5 @@
 import pandas as pd
-from feature.base_dataset import limit_range
+from feature.base_dataset import limit_range, time_value
 from glob import glob
 
 
@@ -33,3 +33,4 @@ def moving_average(input_path):
         df_moving = pd.concat([df_moving, df])
     df_moving = df_moving.drop(['DAT'], axis=1)
     return df_moving
+
