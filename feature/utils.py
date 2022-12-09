@@ -45,3 +45,24 @@ def transpose_data(input_path):
     df_t = df_t.drop(['DAT'], axis=1)
     return df_t
 
+
+def increase_rate(df, counts):
+    """predict weight g 성장률
+
+    Args:
+        df (Dataframe): data
+        counts (int): for range
+
+    Returns:
+        Dataframe: result
+    """    
+    result = []
+    result = pd.DataFrame()
+    for k in range(counts):
+        df_icr = df[k*28:(k+1)*28]
+        a = df_icr['predicted_weight_g'].pct_change()
+        z = pd.DataFrame(a)
+        result = pd.concat([result, z], axis=0)
+        
+    result = result.fillna(0) 
+    return result
