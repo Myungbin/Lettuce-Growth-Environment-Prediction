@@ -147,5 +147,3 @@ def pivot_data(df):
     df = df.drop(['DAT', 'Case'], axis=1)
     return df
 
-
-# 식물이 일정이상크면 같은 물의양이 같은의미를 지니지 않는다.->

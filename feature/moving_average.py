@@ -3,11 +3,12 @@ from feature.base_dataset import limit_range, time_value
 from glob import glob
 
 
-def moving_average(input_path):
+def moving_average(input_path, time):
     """make moving_average dataset
 
     Args:
         input_path (str): data input path
+        time (int): rolling time
 
     Returns:
         DataFrame: moving_average time dataset
@@ -22,7 +23,7 @@ def moving_average(input_path):
                       '시간당적색광량', '시간당청색광량', '시간당총광량',
                       '일간누적청색광량', '일간누적적색광량', '일간누적백색광량'], axis=1)
 
-        ma = df.rolling(6, min_periods=1).mean()
+        ma = df.rolling(time, min_periods=1).mean()
         ma['time'] = [i % 24 for i in range(len(ma))]
         ma['DAT'] = [i//24 for i in range(len(ma))]
 

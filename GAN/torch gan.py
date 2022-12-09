@@ -61,7 +61,7 @@ def stats(d):
     return [np.mean(d), np.std(d)]
 
 
-df = pd.read_csv("./train.csv")
+df = pd.read_csv("CASE_01.csv")
 # hyper parameter
 G = Generator()
 D = Discriminator()

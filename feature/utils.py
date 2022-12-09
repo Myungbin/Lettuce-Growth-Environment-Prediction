@@ -17,7 +17,15 @@ def log_scale(train, test):
         test[col] = np.log1p(test[col])
 
 
-def tanspose_data(input_path):
+def transpose_data(input_path):
+    """data transpose
+
+    Args:
+        input_path (str): path
+
+    Returns:
+        DataFrame
+    """    
     input_list = sorted(glob(input_path))
     df_t = pd.DataFrame()
     for i in input_list:
@@ -37,38 +45,3 @@ def tanspose_data(input_path):
     df_t = df_t.drop(['DAT'], axis=1)
     return df_t
 
-# def basic_stat():
-#     train_1 = pd.read_csv('./data/clip_preprocessing/clip_train_quantile0.25.csv')
-#     test_1 = pd.read_csv('./data/clip_preprocessing/clip_test_quantile0.25.csv')
-#     train_3 = pd.read_csv('./data/clip_preprocessing/clip_train_quantile0.75.csv')
-#     test_3 = pd.read_csv('./data/clip_preprocessing/clip_test_quantile0.75.csv')
-#     train_std = pd.read_csv('./data/clip_preprocessing/clip_train_std.csv')
-#     test_std = pd.read_csv('./data/clip_preprocessing/clip_test_std.csv')
-#     train_mid = pd.read_csv('./data/clip_preprocessing/clip_train_median.csv')
-#     test_mid = pd.read_csv('./data/clip_preprocessing/clip_test_median.csv')
-#     train_sem = pd.read_csv('./data/clip_preprocessing/clip_train_sem.csv')
-#     test_sem = pd.read_csv('./data/clip_preprocessing/clip_test_sem.csv')
-
-#     train_3.columns = [col+' q3' for col in train_3.columns]
-#     test_3.columns = [col+' q3' for col in test_3.columns]
-#     train_1.columns = [col+' q1' for col in train_1.columns]
-#     test_1.columns = [col+' q1' for col in test_1.columns]
-#     train_std.columns = [col+' std' for col in train_std.columns]
-#     test_std.columns = [col+' std' for col in test_std.columns]
-#     train_mid.columns = [col+' mid' for col in train_mid.columns]
-#     test_mid.columns = [col+' mid' for col in test_mid.columns]
-#     train_sem.columns = [col+' sem' for col in train_sem.columns]
-#     test_sem.columns = [col+' sem' for col in test_sem.columns]
-
-#     train = train.reset_index()
-#     test  = test.reset_index()
-#     train_3 = train_3.reset_index()
-#     test_3 = test_3.reset_index()
-#     train_1 = train_1.reset_index()
-#     test_1 = test_1.reset_index()
-#     train_std = train_std.reset_index()
-#     test_std = test_std.reset_index()
-#     train_mid = train_mid.reset_index()
-#     test_mid = test_mid.reset_index()
-#     train_sem = train_sem.reset_index()
-#     test_sem = test_sem.reset_index()
