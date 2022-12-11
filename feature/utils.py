@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from feature.base_dataset import limit_range, time_value
+from scipy.signal import butter, lfilter
 from glob import glob
 
 
@@ -66,3 +67,20 @@ def increase_rate(df, counts):
         
     result = result.fillna(0) 
     return result
+
+
+def LPF(series, low, order=1):
+    '''
+    series : 데이터
+    low : 최저 구간(0< low < 1)
+    order : 필터 계수, 높을수록 민감
+    '''
+    
+    b, a = butter(
+                  N = order,
+                  Wn = low,
+                  btype = 'low',
+                  )
+    lpf_series = lfilter(b, a, series)
+    
+    return lpf_series
