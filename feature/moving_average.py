@@ -19,9 +19,12 @@ def moving_average(input_path, time):
         df = pd.read_csv(i)
         df = limit_range(df)
         df = df.fillna(method='ffill')
-        df = df.drop(['DAT', 'obs_time', '시간당분무량', '시간당백색광량',
-                      '시간당적색광량', '시간당청색광량', '시간당총광량',
-                      '일간누적청색광량', '일간누적적색광량', '일간누적백색광량'], axis=1)
+        drop_feature = ['DAT', 'obs_time', '일간누적분무량', '일간누적백색광량',
+                        '일간누적적색광량', '일간누적청색광량', '일간누적총광량', 'ec관측치']
+        # drop_feature = ['DAT', 'obs_time', '시간당분무량', '시간당백색광량',
+        #               '시간당적색광량', '시간당청색광량', '시간당총광량',
+        #               '일간누적청색광량', '일간누적적색광량', '일간누적백색광량']
+        df = df.drop(drop_feature, axis=1)
 
         ma = df.rolling(time, min_periods=1).mean()
         ma['time'] = [i % 24 for i in range(len(ma))]
