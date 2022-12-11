@@ -10,3 +10,5 @@ def load_data():
     print('train :', len(X_tr_list), len(y_tr_list))
     print('test  :', len(X_te_list), len(y_te_list))
     '''
+
+    return X_tr_list, X_te_list, y_tr_list, y_te_list
