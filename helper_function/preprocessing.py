@@ -8,8 +8,7 @@ def ctgan_preprocessing(df): # input : case df
     raw_shape = df.shape
        
     # input df
-    df['obs_time'] = df.index % 24 
-    df = abs(df)
+    df['obs_time'] = df.index % 24
         
     # limit data range
     df.loc[(df['내부온도관측치'] > 40), '내부온도관측치'] = 40
@@ -21,6 +20,15 @@ def ctgan_preprocessing(df): # input : case df
     df.loc[(df['시간당적색광량'] > 120000), '시간당적색광량'] = 120000
     df.loc[(df['시간당청색광량'] > 120000), '시간당청색광량'] = 120000
     df.loc[(df['시간당총광량'] > 120000), '시간당총광량'] = 120000
+    df.loc[(df['내부온도관측치'] < 0), '내부온도관측치'] = 0
+    df.loc[(df['내부습도관측치'] < 0), '내부습도관측치'] = 0
+    df.loc[(df['co2관측치'] < 0), 'co2관측치'] = 0
+    df.loc[(df['ec관측치'] < 0), 'ec관측치'] = 0
+    df.loc[(df['시간당분무량'] < 0), '시간당분무량'] = 0
+    df.loc[(df['시간당백색광량'] < 0), '시간당백색광량'] = 0
+    df.loc[(df['시간당적색광량'] < 0), '시간당적색광량'] = 0
+    df.loc[(df['시간당청색광량'] < 0), '시간당청색광량'] = 0
+    df.loc[(df['시간당총광량'] < 0), '시간당총광량'] = 0    
     df['시간당총광량'] = df['시간당청색광량'] + df['시간당백색광량'] + df['시간당적색광량']
         
     cols = df.columns
@@ -30,11 +38,13 @@ def ctgan_preprocessing(df): # input : case df
         col = cols[i]
 
         if '누적' in col:
-            df[col] = df.groupby((df.obs_time == 0).cumsum()).agg(cols[i - 1]).cumsum()
-
+            # df[col] = df.groupby((df.obs_time == 0).cumsum()).agg(cols[i - 1]).cumsum()
+            df.drop([col], axis=1, inplace=True)
+        
+    df.drop(['시간당총광량'], axis=1, inplace=True)
     print(f'Done. (ctgan preprocessing {raw_shape} => {df.shape})')
 
-    return df # df_fin
+    return df
 
 
 # preprocessing for pred model input
