@@ -1,3 +1,0 @@
-csv4 + Loss, high, butter 필터 적용
-
-autogluon : 5.8 (scaling x)
