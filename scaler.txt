@@ -1,2 +1,0 @@
-# standard > log = robust
-# standard 한 후 음수값을 0으로 올리면서 성능이 좋아진 것??
