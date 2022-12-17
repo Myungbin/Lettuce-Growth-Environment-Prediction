@@ -1,7 +1,9 @@
 import glob
 
 
+# load tr, te file list
 def load_data():
+    
     X_tr_list = sorted(glob.glob('./data/train_input/*.csv')) 
     X_te_list = sorted(glob.glob('./data/test_input/*.csv'))
     y_tr_list = sorted(glob.glob('./data/train_target/*.csv'))
@@ -13,3 +15,8 @@ def load_data():
     '''
     
     return X_tr_list, X_te_list, y_tr_list, y_te_list
+
+# aug data => add cumsum cols => return X, y
+def make_data():
+
+    return
