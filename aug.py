@@ -26,12 +26,13 @@ def augmentation(epochs, file_list, save_path):
         # data
         X = pd.read_csv(path)
 
-        # preprocessing
-        X_pre = preprocessing.ctgan_preprocessing(X)
+        # ctgan preprocessing
+        X = preprocessing.ctgan_preprocessing(X)
+        X_pre = X.iloc[:, 2:]
 
         # fit model
         model = CTGAN(verbose=True)
-        model.fit(X_pre, discrete_cols, epochs=epochs)
+        model.fit(X_pre, epochs=epochs) # discrete_cols, epochs=epochs)
 
         # generate samples based on learned model
         aug_X = model.sample(X_pre.shape[0])
