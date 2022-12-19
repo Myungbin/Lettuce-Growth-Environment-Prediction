@@ -1,9 +1,11 @@
 from helper_function import dataset
 from helper_function import preprocessing
+from helper_function import shape
 
 from ctgan import CTGAN
 from table_evaluator import load_data, TableEvaluator
 
+from os import listdir
 import pandas as pd
 import numpy as np
 import os, sys, glob, warnings
@@ -18,35 +20,82 @@ X_tr_list, X_te_list, y_tr_list, y_te_list = dataset.load_data()
 discrete_cols = ['DAT', 'obs_time']
 
 
-def augmentation(epochs, file_list, save_path):
-    
+def augmentation(mode, epochs, file_list, save_path):
+    '''
     # augmentation based on ctgan
-    for path in file_list:
+    for idx, path in enumerate(file_list):
 
         # data
         X = pd.read_csv(path)
 
-        # ctgan preprocessing
+        # del cumsum cols
         X = preprocessing.ctgan_preprocessing(X)
-        X_pre = X.iloc[:, 2:]
+        X_pre = X.iloc[:, 2:] # except discrete_cols
+        if mode == 'train':
+            X_pre.to_csv(f'./data/aug_input/train/1_del_cumsum/TRAIN{idx}.csv', index=False)
+        if mode == 'test':
+            X_pre.to_csv(f'./data/aug_input/test/1_del_cumsum/TEST{idx}.csv', index=False)
 
-        # fit model
-        model = CTGAN(verbose=True)
-        model.fit(X_pre, epochs=epochs) # discrete_cols, epochs=epochs)
+        # linear
+        X_pre = shape.linear(X_pre)
+        if mode == 'train':
+            X_pre.to_csv(f'./data/aug_input/train/2_linear/TRAIN{idx}.csv', index=False)
+        if mode == 'test':
+            X_pre.to_csv(f'./data/aug_input/test/2_linear/TEST{idx}.csv', index=False)
 
-        # generate samples based on learned model
-        aug_X = model.sample(X_pre.shape[0])
+    # groupby day
+    if mode == 'train':
+        linear_path = './data/aug_input/train/2_linear/'
+        linear_files = listdir(linear_path)
+        X_pre = shape.groupby_day('train', linear_path, linear_files)
+    if mode == 'test':
+        linear_path = './data/aug_input/test/2_linear/'
+        linear_files = listdir(linear_path)
+        X_pre = shape.groupby_day('test', linear_path, linear_files)
+    '''
+    # augmentation based on ctgan
+    if mode == 'train':
 
-        # result of sorted samples
-        aug_X = preprocessing.save_preprocessing(aug_X) # to limit data range
-        aug_X.sort_values(by=['DAT', 'obs_time'], ascending=[True, True], inplace=True)
+        for d in range(0, 28): # train
+            X_pre = shape.get_groups('train', d) # X_pre.shape = (28, 193)
 
-        # save aug file
-        aug_X.to_csv(f'{save_path}{path[-11:]}', index=False)
+            # fit model
+            model = CTGAN(verbose=True)
+            model.fit(X_pre, epochs=epochs) # discrete_cols, epochs=epochs)
 
-        # add cols to aug file (ex - cumsum)
+            # generate samples based on learned model
+            aug_X = model.sample(100)
+            aug_X.to_csv(f'./data/aug_input/train/4_aug/TRAIN{d}', index=False)
+
+            '''
+
+            # result of sorted samples (=> after reshape)
+            # aug_X = preprocessing.save_preprocessing(aug_X) # to limit data range
+
+            # concat with DAT & obs_time
+            fin_aug_X = pd.concat([X.iloc[:, :2], aug_X], axis=1)
+
+            # save aug file
+            fin_aug_X.to_csv(f'{save_path}{path[-11:]}', index=False)
+
+            '''
+
+    if mode == 'test': 
+
+        for d in range(0, 28):  # test
+            X_pre = shape.get_groups('test', d)
+
+            # fit model
+            model = CTGAN(verbose=True)
+            model.fit(X_pre, epochs=epochs) # discrete_cols, epochs=epochs)
+
+            # generate samples based on learned model
+            aug_X = model.sample(100)
+            aug_X.to_csv(f'./data/aug_input/test/4_aug/TEST{d}', index=False)
+
+        
 
 
 ''' sample '''
-augmentation(2, X_tr_list, './data/aug_train_input/AUG_')
-augmentation(2, X_te_list, './data/aug_test_input/AUG_')
+augmentation('train', 50, X_tr_list, './data/aug_train_input/AUG_')
+augmentation('test', 50, X_te_list, './data/aug_test_input/AUG_')

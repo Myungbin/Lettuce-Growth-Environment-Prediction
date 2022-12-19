@@ -1,6 +1,7 @@
 import pandas as pd
 
 
+# =================================================================
 # preprocessing for ctgan input
 def ctgan_preprocessing(df): # input : case df
 
@@ -88,6 +89,12 @@ def save_preprocessing(df): # input : case df
 
     return df
 
+
+# =================================================================
+# select day to fix
+def select_day():
+
+    return
 
 # preprocessing for pred model input
 def pred_preprocessing(df):
