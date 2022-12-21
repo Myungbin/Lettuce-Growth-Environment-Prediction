@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os
 
 def linear(df):
 
@@ -76,13 +77,82 @@ def get_groups(mode, day):
     return group
 
 
+def create(mode):
+
+    if mode == 'train':
+
+        # 0 ~ 27 일의 조합들 생성
+        aug_path = './data/aug_input/train/4_aug/'
+        aug_files = os.listdir(aug_path)
+        linear_cols = pd.read_csv(aug_path + aug_files[0]).columns.tolist()
+
+        ''' have to modify '''
+
+        for idx in range(0, 100):
+            
+            result = pd.DataFrame(columns=linear_cols)
+
+            for aug_file in aug_files:
+                file_path = aug_path + aug_file
+
+                target_vals = pd.read_csv(file_path).iloc[idx].tolist()        # samples of each day (type : list)
+                target = pd.DataFrame(columns=linear_cols, data=[target_vals]) # samples of each day (type : dataframe)
+                result = pd.concat([result, target], axis=0)                   # concat with other day
+
+            result.sort_values(by=['day'], inplace=True)
+            result.to_csv(f'./data/aug_input/train/5_create/TRAIN{idx}.csv', index=False)
+
+        ''' have to modify '''
+   
+
+    elif mode == 'test':
+
+        return
+
+
+def reshape(mode):
+
+    if mode == 'train':
+
+        raw_cols = ['내부온도관측치', '내부습도관측치', 'co2관측치', 'ec관측치', '시간당분무량', '시간당백색광량', '시간당적색광량', '시간당청색광량']
+        linear_cols = pd.read_csv('./data/aug_input/train/5_create/TRAIN0.csv').columns.tolist()
+
+        concat_path = './data/aug_input/train/5_create/'
+        concat_files = os.listdir(concat_path)
+        
+        for f_idx, concat_file in enumerate(concat_files):
+            file_path = concat_path + concat_file
+
+            target = pd.read_csv(file_path) # = case sample
+            result = pd.DataFrame(columns=raw_cols)
+            eachtime = pd.DataFrame(columns=raw_cols)
+            
+            for idx in range(len(target)):            # = day0 ~ day27
+                for i, r_col in enumerate(raw_cols):  # = dayn time
+
+                    vals = target.iloc[i, (i * 24 + 1):(i * 24 + 25)].tolist()
+                    eachtime[r_col] = vals
+
+                result = pd.concat([result, eachtime], axis=0)
+            
+            result.to_csv(f'./data/aug_input/train/6_reshape/TRAIN{f_idx}', index=False)
+
+    if mode == 'test':
+
+        return
+
+
 ''' sample '''
-''' 
-linear(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\aug_input\train\1_del_cumsum\TRAIN0.csv') '''
-'''
-from os import listdir
-linear_path = '../data/aug_input/train/2_linear/'
-linear_files = listdir(linear_path)
-groupby_day(linear_path, linear_files) '''
-''' 
-get_groups('train', 0) '''
+''' 2) '''
+# linear(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\aug_input\train\1_del_cumsum\TRAIN0.csv')
+''' 3) '''
+# from os import listdir
+# linear_path = '../data/aug_input/train/2_linear/'
+# linear_files = listdir(linear_path)
+# groupby_day(linear_path, linear_files)
+''' 4) '''
+# get_groups('train', 0)
+''' 5) '''
+# create('train')
+''' 6) '''
+# reshape('train')

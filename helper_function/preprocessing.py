@@ -44,7 +44,7 @@ def ctgan_preprocessing(df): # input : case df
         elif '총광량' in col:
             df.drop([col], axis=1, inplace=True)
         
-    print(f'Done. (ctgan preprocessing {raw_shape} => {df.shape})')
+    # print(f'Done. (ctgan preprocessing {raw_shape} => {df.shape})')
 
     return df
 
@@ -85,7 +85,7 @@ def save_preprocessing(df): # input : case df
         elif '총광량' in col:
             df.drop([col], axis=1, inplace=True)
         
-    print(f'Done. (save {raw_shape} => {df.shape})')
+    # print(f'Done. (save {raw_shape} => {df.shape})')
 
     return df
 

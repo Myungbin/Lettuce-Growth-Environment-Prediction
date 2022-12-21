@@ -13,29 +13,24 @@ sum_cols = ['시간당총광량']
 target_cols = ['시간당분무량', '시간당백색광량', '시간당적색광량', '시간당청색광량']
 
 
-def make_cumsum_cols(file_list, save_path):
+def make_cumsum_cols(df):
 
-    for path in file_list:
+    # data
+    X = df
 
-        # data
-        X = pd.read_csv(path)
+    # create sum_cols
+    X['시간당총광량'] = X['시간당백색광량'] + X['시간당적색광량'] + X['시간당청색광량']
 
-        # create sum_cols
-        X['시간당총광량'] = X['시간당백색광량'] + X['시간당적색광량'] + X['시간당청색광량']
+    # create cumsum_cols
+    for idx, col in enumerate(cumsum_cols):
+        if col != '일간누적총광량':
+            X[col] = X[target_cols[idx]].cumsum()
+        else:
+            X[col] = X['시간당총광량'].cumsum()
 
-        # create cumsum_cols
-        for idx, col in enumerate(cumsum_cols):
-            if col != '일간누적총광량':
-                X[col] = X[target_cols[idx]].cumsum()
-            else:
-                X[col] = X['시간당총광량'].cumsum()
-
-        # save df
-        X.to_csv(f'{save_path}{path[-11:]}', index=False)
-
-    return
+    return X
 
 
 ''' sample '''
-make_cumsum_cols(X_tr_aug_list, './data/aug_cumsum_train_input/AUG_')
-make_cumsum_cols(X_te_aug_list, './data/aug_cumsum_test_input/AUG_')
+# make_cumsum_cols(df)
+# make_cumsum_cols(df)
