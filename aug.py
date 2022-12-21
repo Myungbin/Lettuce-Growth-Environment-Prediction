@@ -104,6 +104,7 @@ def augmentation(mode, epochs, file_list, save_path):
             target = preprocessing.save_preprocessing(target)     # range cutoff
             target = cumsum.make_cumsum_cols(target)              # create cumsum cols
             target = pd.concat([DAT_OBS_TIME, target], axis=1)    # create DAT, obs_time cols
+            
             target.to_csv(f'./data/aug_input/train/7_fin/TRAIN{idx}.csv', index=False) # save file
 
     if mode == 'test':
