@@ -57,7 +57,8 @@ def groupby_day(mode, path, file_list):
         result = pd.concat([result, df], axis=0)
 
     if mode == 'train':
-        result.to_csv(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\aug_input\train\3_groupby_day\TRAIN.csv', index=False)
+        # result.to_csv(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\aug_input\train\3_groupby_day\TRAIN.csv', index=False)
+        result.to_csv(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\mid\aug_input\3_groupby_day\TRAIN.csv', index=False)  ## mid ##
     if mode == 'test':
         result.to_csv(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\aug_input\test\3_groupby_day\TEST.csv', index=False)
 
@@ -67,7 +68,8 @@ def groupby_day(mode, path, file_list):
 def get_groups(mode, day):
 
     if mode == 'train':
-        df = pd.read_csv('./data/aug_input/train/3_groupby_day/TRAIN.csv')
+        # df = pd.read_csv('./data/aug_input/train/3_groupby_day/TRAIN.csv')
+        df = pd.read_csv('./data/mid/aug_input/3_groupby_day/TRAIN.csv') ## mid ##
     if mode == 'test':
         df = pd.read_csv('./data/aug_input/test/3_groupby_day/TEST.csv')
     

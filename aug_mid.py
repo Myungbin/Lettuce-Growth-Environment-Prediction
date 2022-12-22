@@ -23,6 +23,9 @@ X_tr_list, X_te_list, y_tr_list, y_te_list = dataset.load_data()
 # category cols
 discrete_cols = ['DAT', 'obs_time']
 
+## mid ## => del
+X_tr_list = sorted(glob.glob('./data/mid/mid_input/*.csv'))
+print(X_tr_list)
 
 def augmentation(mode, epochs, file_list, save_path):
 
@@ -39,7 +42,8 @@ def augmentation(mode, epochs, file_list, save_path):
         X = preprocessing.ctgan_preprocessing(X)
         X_pre = X.iloc[:, 2:] # except discrete_cols
         if mode == 'train':
-            X_pre.to_csv(f'./data/aug_input/train/1_del_cumsum/TRAIN{idx}.csv', index=False)
+            # X_pre.to_csv(f'./data/aug_input/train/1_del_cumsum/TRAIN{idx}.csv', index=False)
+            X_pre.to_csv(f'./data/mid/aug_input/1_del_cumsum/TRAIN{idx}.csv', index=False)       ## mid ##
         elif mode == 'test':
             X_pre.to_csv(f'./data/aug_input/test/1_del_cumsum/TEST{idx}.csv', index=False)
         print('Done. (del cumsum columns)')
@@ -47,14 +51,16 @@ def augmentation(mode, epochs, file_list, save_path):
         # linear
         X_pre = shape.linear(X_pre)
         if mode == 'train':
-            X_pre.to_csv(f'./data/aug_input/train/2_linear/TRAIN{idx}.csv', index=False)
+            # X_pre.to_csv(f'./data/aug_input/train/2_linear/TRAIN{idx}.csv', index=False)
+            X_pre.to_csv(f'./data/mid/aug_input/2_linear/TRAIN{idx}.csv', index=False)           ## mid ##
         elif mode == 'test':
             X_pre.to_csv(f'./data/aug_input/test/2_linear/TEST{idx}.csv', index=False)
         print('Done. (linear)')
 
     # groupby day
     if mode == 'train':
-        linear_path = './data/aug_input/train/2_linear/'
+        # linear_path = './data/aug_input/train/2_linear/'
+        linear_path = './data/mid/aug_input/2_linear/'             ## mid ##
         linear_files = listdir(linear_path)
         X_pre = shape.groupby_day('train', linear_path, linear_files)
     elif mode == 'test':
@@ -75,8 +81,8 @@ def augmentation(mode, epochs, file_list, save_path):
 
             # generate samples based on learned model
             aug_X = model.sample(50)
-            aug_X.to_csv(f'./data/aug_input/train/4_aug/TRAIN{d}', index=False)
-            print(aug_X)
+            # aug_X.to_csv(f'./data/aug_input/train/4_aug/TRAIN{d}', index=False)
+            aug_X.to_csv(f'./data/mid/aug_input/4_aug/TRAIN{d}', index=False)    ## mid ##
 
     elif mode == 'test': 
 
@@ -96,6 +102,7 @@ def augmentation(mode, epochs, file_list, save_path):
     # create dataset
     DAT_OBS_TIME = pd.read_csv('./data/train_input/CASE_01.csv').iloc[:, :2]
 
+    '''
     if mode == 'train':
 
         # create
@@ -122,7 +129,8 @@ def augmentation(mode, epochs, file_list, save_path):
         return
     
     print('Done. (create)')
-        
+    
+    '''
 
 
 ''' sample '''
