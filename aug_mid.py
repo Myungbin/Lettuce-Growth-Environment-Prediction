@@ -31,8 +31,6 @@ def augmentation(mode, epochs, file_list, save_path):
 
     # seed everything
     seed.seed_everything(0)
-
-    '''
     
     # augmentation based on ctgan
     for idx, path in enumerate(file_list):
@@ -101,18 +99,14 @@ def augmentation(mode, epochs, file_list, save_path):
 
     print('Done. (augmentation)')
 
-    '''
-
     # create dataset
     DAT_OBS_TIME = pd.read_csv(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\mid\mid_input\CASE_01.csv').iloc[:, :2]
 
     
     if mode == 'train':
 
-        '''
         # create
         shape.create('train')
-        '''
         # reshape
         shape.reshape('train')
 
