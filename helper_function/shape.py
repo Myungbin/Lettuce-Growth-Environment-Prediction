@@ -84,7 +84,8 @@ def create(mode):
     if mode == 'train':
 
         # 0 ~ 27 일의 조합들 생성
-        aug_path = './data/aug_input/train/4_aug/'
+        # aug_path = './data/aug_input/train/4_aug/'
+        aug_path = './data/mid/aug_input/4_aug/' ## mid ##
         aug_files = os.listdir(aug_path)
         linear_cols = pd.read_csv(aug_path + aug_files[0]).columns.tolist()
 
@@ -102,7 +103,8 @@ def create(mode):
                 result = pd.concat([result, target], axis=0)                   # concat with other day
 
             result.sort_values(by=['day'], inplace=True)
-            result.to_csv(f'./data/aug_input/train/5_create/TRAIN{idx}.csv', index=False)
+            # result.to_csv(f'./data/aug_input/train/5_create/TRAIN{idx}.csv', index=False)
+            result.to_csv(f'./data/mid/aug_input/5_create/TRAIN{idx}.csv', index=False)      ## mid ## 
 
         ''' have to modify '''
    
@@ -117,9 +119,12 @@ def reshape(mode):
     if mode == 'train':
 
         raw_cols = ['내부온도관측치', '내부습도관측치', 'co2관측치', 'ec관측치', '시간당분무량', '시간당백색광량', '시간당적색광량', '시간당청색광량']
-        linear_cols = pd.read_csv('./data/aug_input/train/5_create/TRAIN0.csv').columns.tolist()
+        # linear_cols = pd.read_csv('./data/aug_input/train/5_create/TRAIN0.csv').columns.tolist()
+        linear_cols = pd.read_csv('./data/mid/aug_input/5_create/TRAIN0.csv').columns.tolist()    ## mid ##
 
-        concat_path = './data/aug_input/train/5_create/'
+        # concat_path = './data/aug_input/train/5_create/'
+        concat_path = './data/mid/aug_input/5_create/'    ## mid ##
+
         concat_files = os.listdir(concat_path)
         
         for f_idx, concat_file in enumerate(concat_files):
@@ -137,7 +142,8 @@ def reshape(mode):
 
                 result = pd.concat([result, eachtime], axis=0)
             
-            result.to_csv(f'./data/aug_input/train/6_reshape/TRAIN{f_idx}', index=False)
+            # result.to_csv(f'./data/aug_input/train/6_reshape/TRAIN{f_idx}', index=False)
+            result.to_csv(f'./data/mid/aug_input/6_reshape/TRAIN{f_idx}', index=False)    ## mid ## 
 
     if mode == 'test':
 

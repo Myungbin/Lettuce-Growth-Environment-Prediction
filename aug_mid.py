@@ -31,6 +31,8 @@ def augmentation(mode, epochs, file_list, save_path):
 
     # seed everything
     seed.seed_everything(0)
+
+    '''
     
     # augmentation based on ctgan
     for idx, path in enumerate(file_list):
@@ -99,27 +101,34 @@ def augmentation(mode, epochs, file_list, save_path):
 
     print('Done. (augmentation)')
 
-    # create dataset
-    DAT_OBS_TIME = pd.read_csv('./data/train_input/CASE_01.csv').iloc[:, :2]
-
     '''
+
+    # create dataset
+    DAT_OBS_TIME = pd.read_csv(r'C:\Project\dacon-lettuce-growth\Lettuce-Growth-Environment-Prediction\data\mid\mid_input\CASE_01.csv').iloc[:, :2]
+
+    
     if mode == 'train':
 
+        '''
         # create
         shape.create('train')
+        '''
         # reshape
         shape.reshape('train')
 
         # preprocessing to input predict model
-        for idx, f in enumerate(os.listdir('./data/aug_input/train/6_reshape/')):
-            file_path = './data/aug_input/train/6_reshape/' + f   # file path
+        # for idx, f in enumerate(os.listdir('./data/aug_input/train/6_reshape/')):
+        for idx, f in enumerate(os.listdir('./data/mid/aug_input/6_reshape/')):    ## mid ##
+            # file_path = './data/aug_input/train/6_reshape/' + f   # file path
+            file_path = './data/mid/aug_input/6_reshape/' + f
 
             target = pd.read_csv(file_path)                       # dataframe
             target = preprocessing.save_preprocessing(target)     # range cutoff
             target = cumsum.make_cumsum_cols(target)              # create cumsum cols
             target = pd.concat([DAT_OBS_TIME, target], axis=1)    # create DAT, obs_time cols
             
-            target.to_csv(f'./data/aug_input/train/7_fin/TRAIN{idx}.csv', index=False) # save file
+            # target.to_csv(f'./data/aug_input/train/7_fin/TRAIN{idx}.csv', index=False) # save file
+            target.to_csv(f'./data/mid/aug_input/7_fin/TRAIN{idx}.csv', index=False)    ## mid ##
 
 
     if mode == 'test':
@@ -130,7 +139,7 @@ def augmentation(mode, epochs, file_list, save_path):
     
     print('Done. (create)')
     
-    '''
+    
 
 
 ''' sample '''
