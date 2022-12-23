@@ -1,9 +1,0 @@
-csv1은 하루 끝 누적값만 있는 피처
-
- + 
-
-05시, 19시 누적 피처 추가
-
-catboost = 10.2(public)
-autogluon = 8.2(public) yes scaling
-autogluon = 8.0(public) no scaling
