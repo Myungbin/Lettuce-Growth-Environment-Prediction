@@ -127,5 +127,3 @@ https://github.com/sdv-dev/CTGAN
 생육환경  
 https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=NPAP08069532&dbt=NPAP
 
-## ❔Comments
-https://blog.naver.com/mbk1103_/222970298826
