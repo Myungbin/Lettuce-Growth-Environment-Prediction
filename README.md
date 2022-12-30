@@ -47,6 +47,7 @@ Project_folder/
 |- predict_model/  # Autogluon Model (pkl)
 |- config  # Setting (py)
 |- *model  # notebook (ipynb)
+|_ [Dacon]상추의-생육-환경-생성-AI-경진대회_상추세요  # ppt (pdf) 
 ```
 ## 📖 Dataset
 **Data Source**  [Train Test Dateset](https://dacon.io/competitions/official/236033/data)
@@ -126,3 +127,5 @@ https://github.com/sdv-dev/CTGAN
 생육환경  
 https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=NPAP08069532&dbt=NPAP
 
+## ❔Comments
+https://blog.naver.com/mbk1103_/222970298826
