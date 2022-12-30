@@ -128,4 +128,4 @@ https://github.com/sdv-dev/CTGAN
 https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=NPAP08069532&dbt=NPAP
 
 ## ❔Comments
-[후기](https://blog.naver.com/mbk1103_/222970298826)
+[참여 후기](https://blog.naver.com/mbk1103_/222970298826)
